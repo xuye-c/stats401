@@ -9,18 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const margin = {
         top: 30,
-        right: 20,
+        right: 30,
         bottom: 40,
         left: 40
     };
 
-    const svgWidth = 600;
-    const svgHeight = 400;
+    const svgWidth = 660;
+    const svgHeight = 420;
 
     const chartW = svgWidth - margin.left - margin.right;
     const chartH = svgHeight - margin.top - margin.bottom;
 
-    const svg = d3.select("#chart");
+    const svg = d3.select("#chart")
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
 
     const g = svg.append("g")
         .attr(
