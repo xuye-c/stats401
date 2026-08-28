@@ -1,0 +1,56 @@
+#chart {
+    position: relative;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    overflow: visible;
+}
+
+#chart svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+#chart circle {
+    cursor: pointer;
+    transition: opacity 0.2s ease, stroke-width 0.2s ease;
+}
+
+#chart circle:hover {
+    opacity: 1;
+    stroke-width: 2.5;
+}
+
+#chart .axis text {
+    fill: #dfe7ff;
+    font-size: 12px;
+}
+
+#chart .axis path,
+#chart .axis line {
+    stroke: rgba(255, 255, 255, 0.25);
+}
+
+#chart .legend text {
+    fill: #e2e8f0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.tooltip {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(9, 14, 25, 0.93);
+    color: #f3f6ff;
+    border: 1px solid rgba(124, 140, 255, 0.55);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
