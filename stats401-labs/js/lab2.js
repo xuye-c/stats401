@@ -49,8 +49,10 @@ d3.csv("../data/cities_multivariate.csv", d => ({
         .range(["#0e4bae", "#da0c54"]);
     const svg = d3.select("#chart")
     .append("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .attr("preserveAspectRatio", "xMidYMid meet");
 
     const gradient = svg.append("defs")
     .append("linearGradient")

@@ -1,6 +1,8 @@
 #chart {
     position: relative;
     margin-top: 20px;
+    width: min(100%, 920px);
+    max-width: 100%;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.02);
@@ -10,8 +12,12 @@
 
 #chart svg {
     display: block;
-    max-width: 100%;
+    width: 100%;
     height: auto;
+    max-width: 920px;
+    min-width: 700px;
+    margin: 0 auto;
+    aspect-ratio: 800 / 600;
 }
 
 #chart circle {
