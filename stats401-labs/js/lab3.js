@@ -76,6 +76,7 @@ d3.csv("../data/lab3_data.csv").then(data => {
     });
 
     function renderTable() {
+        tbody.selectAll(".empty-state-row").remove();
         const sortedData = [...filteredData];
         if (sortColumn) {
             sortedData.sort((a, b) => {
@@ -89,16 +90,19 @@ d3.csv("../data/lab3_data.csv").then(data => {
         const start = (currentPage - 1) * rowsPerPage;
         const pageData = sortedData.slice(start, start + rowsPerPage);
 
-        tbody.selectAll("tr")
-            .data(pageData)
+        tbody.selectAll("tr.data-row")
+            .data(pageData, d => d.id)
             .join("tr")
+            .attr("class", "data-row")
             .selectAll("td")
             .data(d => columns.map(column => d[column]))
             .join("td")
             .text(d => d || "—");
 
         if (!pageData.length) {
-            tbody.append("tr").append("td")
+            tbody.append("tr")
+                .attr("class", "empty-state-row")
+                .append("td")
                 .attr("colspan", columns.length)
                 .attr("class", "empty-state")
                 .text("No works match your search.");
