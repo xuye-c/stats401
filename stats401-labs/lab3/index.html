@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Lab 3 | OpenAlex Papers</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab3.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+    </nav>
+    <main>
+        <section class="lab3-heading">
+            <div>
+                <p class="eyebrow">OpenAlex collection</p>
+                <h2>Lab 3: Web Data Acquisition with Python</h2>
+            </div>
+        </section>
+        <section class="table-tools" aria-label="Table controls">
+            <label class="search-field" for="search-input">
+                <span>Search works</span>
+                <input id="search-input" type="search" placeholder="Search by ID or title..." autocomplete="off">
+            </label>
+            <label class="filter-field" for="type-filter">
+                <span>Type</span>
+                <select id="type-filter">
+                    <option value="all">All types</option>
+                </select>
+            </label>
+            <label class="filter-field" for="oa-filter">
+                <span>Open access</span>
+                <select id="oa-filter">
+                    <option value="all">All works</option>
+                    <option value="true">Open access</option>
+                    <option value="false">Closed access</option>
+                </select>
+            </label>
+        </section>
+        <div id="table-summary" class="table-summary" aria-live="polite"></div>
+        <div id="table-container"></div>
+        <div id="pagination"></div>
+    </main>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab3.js" defer></script>
+
+</body>
+
+</html>
