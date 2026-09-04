@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Lab 4</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab4.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+    </nav>
+    <main>
+        <h2>Lab 4: Cleaning Web Data for Visualization</h2>
+        <div id="controls"></div>
+        <div id="chart">
+            <div id="visualization-row"></div>
+        </div>
+        <section class="dataset-section">
+            <h3>Dataset Introduction</h3>
+            <p>
+                This visualization uses the <em>twitter-2k</em> dataset, a collection of
+                2,000 public tweets obtained from Hugging Face Datasets. Each record
+                represents one tweet and includes its text, creation time, author ID,
+                and several engagement-related metrics, including likes, retweets,
+                replies, quotes, bookmarks, and impressions. For this visualization,
+                the five interaction metrics (likes, retweets, replies, quotes, and
+                bookmarks) are combined into an overall engagement measure, while
+                impressions are treated separately as an exposure measure. The dataset
+                also includes sentiment predictions generated using a
+                RoBERTa-based model, which classifies each tweet as Negative, Neutral,
+                or Positive and provides corresponding sentiment scores.
+            </p>
+        </section>
+        <section class="analysis-section">
+        <h3>Analysis</h3>
+            <p>
+            This visualization examines how engagement relates to attention and sentiment in a sample of 2,000 tweets. Before analysis, several unusual or difficult-to-interpret posts were removed from the sample to reduce the influence of irrelevant content. Engagement is defined as the combined number of likes, retweets, replies, quotes, and bookmarks, while impressions are treated separately as a measure of exposure.
+            </p>
+            <p>
+            The visualization shows that most tweets receive little interaction: a large proportion have zero engagement, and interaction-to-impression ratios are generally low. In the high-engagement range (100+ interactions), Positive and Neutral tweets are more common, while Negative tweets are relatively rare. However, the overall engagement distributions of the three sentiment groups remain broadly similar, suggesting that sentiment does not create a completely different engagement pattern. The interactive filters allow these patterns to be explored under different definitions of low attention and across different sentiment populations.
+            </p>
+        </section>
+        <section class="reference-section">
+            <h3>Dataset Reference</h3>
+            <p>
+                Dataset:
+                <a href="https://huggingface.co/datasets/pablonara-work/twitter-2k"
+                target="_blank"
+                rel="noopener noreferrer">
+                    <em>twitter-2k</em>
+                </a><br>
+                Author: pablonara-work<br>
+                Source: Hugging Face Datasets<br>
+                Records: 2,000 tweets<br>
+                Accessed: September 2026
+            </p>
+        </section>
+    </main>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab4.js" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+#controls {
+	display: grid;
+	grid-template-columns: minmax(280px, 1.6fr) minmax(180px, 0.9fr) minmax(240px, 1.2fr);
+	align-items: end;
+	gap: 16px;
+	margin: 22px 0 20px;
+	padding: 16px;
+	background: rgba(18, 23, 35, 0.72);
+	border: 1px solid var(--panel-border);
+	border-radius: 12px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.control-field {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+	min-height: 44px;
+	padding: 8px 10px;
+	color: var(--muted);
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	line-height: 1;
+	text-transform: uppercase;
+	background: rgba(255, 255, 255, 0.025);
+	border: 1px solid rgba(255, 255, 255, 0.07);
+	border-radius: 9px;
+}
+
+.control-field select {
+	min-width: 0;
+	min-height: 34px;
+	flex: 1;
+	padding: 0 30px 0 10px;
+	color: var(--text);
+	font: inherit;
+	font-size: 0.86rem;
+	font-weight: 500;
+	letter-spacing: 0;
+	text-transform: none;
+	background: var(--panel);
+	border: 1px solid rgba(124, 140, 255, 0.28);
+	border-radius: 7px;
+	outline: none;
+}
+
+.control-field select:focus {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.k-field {
+	flex-wrap: wrap;
+}
+
+.k-field input[type="range"] {
+	min-width: 120px;
+	flex: 1;
+	accent-color: var(--accent);
+	cursor: pointer;
+}
+
+.k-field input[type="range"]::-webkit-slider-runnable-track {
+	height: 5px;
+	background: rgba(157, 169, 255, 0.28);
+	border-radius: 999px;
+}
+
+.k-field input[type="range"]::-webkit-slider-thumb {
+	width: 17px;
+	height: 17px;
+	margin-top: -6px;
+	background: var(--accent-light);
+	border: 2px solid var(--text);
+	border-radius: 50%;
+	box-shadow: 0 0 0 4px var(--accent-glow);
+	-webkit-appearance: none;
+}
+
+.k-field input[type="range"]:focus {
+	outline: none;
+}
+
+.k-field input[type="range"]:focus::-webkit-slider-thumb {
+	box-shadow: 0 0 0 5px var(--accent-glow);
+}
+
+#k-value {
+	min-width: 48px;
+	padding: 6px 7px;
+	color: var(--accent-light);
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-size: 0.8rem;
+	letter-spacing: 0;
+	text-align: center;
+	background: rgba(124, 140, 255, 0.1);
+	border-radius: 5px;
+}
+
+#chart {
+	width: 100%;
+	min-height: 500px;
+	padding: 14px;
+	overflow-x: auto;
+	border: 1px solid var(--panel-border);
+	border-radius: 10px;
+	background: var(--panel);
+}
+
+#visualization-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 24px;
+	width: max-content;
+	min-width: 100%;
+}
+
+#visualization-row > svg {
+	display: block;
+	height: auto;
+	flex: 0 0 auto;
+}
+
+#visualization-row > svg:first-child {
+	width: 500px;
+	min-width: 500px;
+}
+
+#visualization-row > svg:nth-child(2) {
+	width: 700px;
+	min-width: 700px;
+}
+
+#chart svg {
+	display: block;
+	height: auto;
+}
+.pie-title,
+.histogram-title {
+	font-size: 18px;
+	font-weight: 700;
+    fill: var(--text);
+}
+
+.histogram-subtitle {
+	font-size: 12px;
+    fill: var(--text);
+}
+
+.histogram-x-label,
+.histogram-y-label {
+	font-size: 12px;
+    fill: var(--text);
+}
+
+.histogram-bars rect {
+	cursor: pointer;
+	transition: opacity 0.2s ease, filter 0.2s ease, stroke-width 0.2s ease;
+}
+
+.histogram-bars rect:hover {
+	opacity: 0.88;
+	filter: drop-shadow(0 0 9px var(--accent-glow));
+	stroke: var(--accent-light);
+	stroke-width: 1.5px;
+}
+
+.part1-pie path,
+.sentiment-composition rect {
+	cursor: pointer;
+	transition: opacity 0.2s ease, filter 0.2s ease, stroke-width 0.2s ease;
+}
+
+.part1-pie path:hover,
+.sentiment-composition rect:hover {
+	opacity: 0.88;
+	filter: drop-shadow(0 0 9px var(--accent-glow));
+	stroke: var(--accent-light);
+	stroke-width: 2px;
+}
+
+#histogram-tooltip {
+	position: fixed;
+	z-index: 20;
+	max-width: 240px;
+	padding: 9px 11px;
+	color: var(--text);
+	font-size: 0.78rem;
+	line-height: 1.55;
+	background: rgba(8, 11, 18, 0.96);
+	border: 1px solid rgba(163, 109, 233, 0.7);
+	border-radius: 7px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+	pointer-events: none;
+}
+.analysis-section,
+.dataset-section,
+.reference-section {
+    margin: 30px 0;
+    color: var(--muted);
+}
+
+.analysis-section h3,
+.dataset-section h3,
+.reference-section h3 {
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.analysis-section p,
+.dataset-section p,
+.reference-section p {
+    line-height: 1.6;
+}
