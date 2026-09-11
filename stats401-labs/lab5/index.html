@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Lab 5</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab5.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+    </nav>
+    <main>
+        <h2>Lab 5: Interactive Network Visualization</h2>
+
+        <section class="dataset-section">
+            <h3>1. Dataset Description</h3>
+            <p>
+                This assignment visualizes a synthetic urban transit network with
+                50 stations and 50 direct connections. Stations belong to five
+                districts (Central, North, South, East, West) and are classified
+                as Local, Transfer, or Terminal. Each station also has an
+                approximate daily passenger volume. Direct routes are Metro,
+                Express, or Shuttle services, each with a travel time in minutes.
+                Each route is a directed station-to-station connection:
+                <code>source</code> is the first station and <code>target</code>
+                is the second. Arrowheads in the node-link view follow that
+                <code>source → target</code> order.
+            </p>
+        </section>
+
+        <section class="chart-section">
+            <h3>2. Node-Link Visualization</h3>
+            <div id="network-controls" class="controls">
+                <label class="control-field" for="route-filter">
+                    <span>Route type</span>
+                    <select id="route-filter">
+                        <option value="all">All routes</option>
+                        <option value="Metro">Metro</option>
+                        <option value="Express">Express</option>
+                        <option value="Shuttle">Shuttle</option>
+                    </select>
+                </label>
+            </div>
+            <div id="chart"></div>
+            <div id="legend"></div>
+            <p class="chart-note">
+                The dashed X splits the canvas into North, East, South, and
+                West. The square in the middle is Central. A station stays in
+                its district; its exact place inside that region is arranged by
+                the force layout, not by real map coordinates. Link width
+                encodes travel time. Arrowheads encode the directed route from
+                <code>source</code> to <code>target</code>.
+            </p>
+        </section>
+
+        <section class="analysis-section">
+            <h3>3. Node-Link Design Description</h3>
+            <h4>Node channels</h4>
+            <ul>
+                <li>Daily passengers — color</li>
+            </ul>
+            <p>
+                I did not use size for daily passengers because size is easy to
+                read as the physical footprint of a station, which I think would
+                be misleading. Color is not the strongest channel for a
+                quantitative variable, but it still gives a quick sense of which
+                stations are busier than others.
+            </p>
+            <ul>
+                <li>Station type — shape</li>
+            </ul>
+            <p>
+                Station type is categorical, so I mapped it to shape. Distinct
+                shapes make it easier to spot Local, Transfer, and Terminal
+                stations, and to see how those roles sit in the network.
+            </p>
+            <ul>
+                <li>District — position</li>
+            </ul>
+            <p>
+                I used position for district because district is already a
+                geographic idea. An X through the middle of the canvas splits
+                North, East, South, and West, and a square at the crossing
+                marks Central. That gives the four outer districts a shared
+                open plane, so links are not trapped inside five small boxes.
+                The mapping is still not a real map: the data do not include
+                coordinates, so a point’s place inside its wedge or square is
+                only a layout position. The note under the chart makes this
+                limit explicit.
+            </p>
+            <h4>Link channels</h4>
+            <ul>
+                <li>Route type — color</li>
+            </ul>
+            <p>
+                Route type is also categorical, so I encoded it with color.
+                Different hues help readers see whether a connection is Metro,
+                Express, or Shuttle. To keep those colors separable from the
+                passenger gradient on the nodes, the route colors use lower
+                saturation and higher lightness. Nodes also have a light outline
+                so their shapes do not blend into the arrowheads.
+            </p>
+            <ul>
+                <li>Travel time — width</li>
+            </ul>
+            <p>
+                Travel time is quantitative, so I mapped it to link width.
+                I first tried length, but district regions and travel-time
+                springs fought each other geometrically. Width stays readable
+                no matter where the stations sit: thicker links are longer
+                trips, and thinner links are shorter ones.
+            </p>
+            <h4>Interaction design</h4>
+            <ul>
+                <li>Hovering over a node — highlight the node and its connected links</li>
+            </ul>
+            <p>
+                Hovering a station highlights that station and the routes that
+                touch it. This makes it easier to see how a station is connected
+                and what role it plays in the network.
+            </p>
+            <ul>
+                <li>Hovering over a link — highlight the link and its endpoints</li>
+            </ul>
+            <p>
+                Hovering a route highlights that link and the two stations it
+                connects.
+            </p>
+            <ul>
+                <li>Dragging a node — keep the station in its district</li>
+            </ul>
+            <p>
+                Stations can be dragged to reduce overlap. A dragged station
+                stays where it is released, but it cannot cross the X or leave
+                the Central square.
+            </p>
+            <ul>
+                <li>Filtering by route type</li>
+            </ul>
+            <p>
+                When a route type is selected, only those links keep their color.
+                The rest are grayed out so it is easier to see where Metro,
+                Express, or Shuttle service sits in the network.
+            </p>
+        </section>
+
+        <section class="chart-section">
+            <h3>4. Adjacency Matrix</h3>
+            <div id="matrix"></div>
+            <div id="matrix-legend"></div>
+            <p class="chart-note">
+                Rows and columns are stations, ordered by station type
+                (Local, then Transfer, then Terminal). Thick lines separate
+                those groups. A filled cell is a direct route; cell color is
+                route type. Label color is the station’s district. The matrix
+                is shown symmetrically, so a directed route
+                <code>A → B</code> appears in both
+                <code>(A, B)</code> and <code>(B, A)</code>.
+            </p>
+        </section>
+
+        <section class="analysis-section">
+            <h3>5. Matrix Design Description</h3>
+            <h4>Grid</h4>
+            <ul>
+                <li>Row / column — station</li>
+            </ul>
+            <p>
+                Each row and each column is one station, so a cell is the pair
+                of those two stations. Axis labels use station ids so 50 names
+                do not overlap; the full name is in the tooltip.
+            </p>
+            <ul>
+                <li>Filled cell — direct connection</li>
+            </ul>
+            <p>
+                A filled cell means the two stations have a direct route. Empty
+                cells are the dark background. The matrix is drawn symmetrically:
+                a directed route <code>A → B</code> appears in both
+                <code>(A, B)</code> and <code>(B, A)</code>, so “who is linked
+                to whom” is easy to scan. The actual direction is kept in the
+                tooltip.
+            </p>
+            <h4>Cell channels</h4>
+            <ul>
+                <li>Route type — color</li>
+            </ul>
+            <p>
+                Cell color uses the same muted Metro / Express / Shuttle palette
+                as the node-link links, so route type matches across the two
+                views. Color is a reasonable channel here because route type is
+                categorical and there are only three classes.
+            </p>
+            <ul>
+                <li>Travel time — tooltip, not opacity</li>
+            </ul>
+            <p>
+                I did not map travel time to cell opacity. Fading the cells
+                would mix with route-type color and make Metro / Express /
+                Shuttle harder to tell apart. Travel time is shown in the
+                tooltip instead, together with direction
+                (<code>source → target</code>).
+            </p>
+            <h4>Label and order</h4>
+            <ul>
+                <li>District — label color</li>
+            </ul>
+            <p>
+                The matrix cannot use map position the way the node-link view
+                does, so district is encoded in the color of the row and column
+                labels. That keeps geographic membership visible while the grid
+                itself stays a connection table.
+            </p>
+            <ul>
+                <li>Station type — ordering and divider lines</li>
+            </ul>
+            <p>
+                Stations are ordered Local, then Transfer, then Terminal, with
+                thick lines between those blocks. A filled cell inside a block
+                is a same-type connection; a cell that crosses a divider is a
+                route between different station types. I did not order by
+                district, so district-to-district structure does not appear as
+                large blocks—only as label color.
+            </p>
+            <h4>Interaction</h4>
+            <ul>
+                <li>Hovering over a cell — highlight the pair and show a full tooltip</li>
+            </ul>
+            <p>
+                Hovering a cell highlights its row and column and opens a
+                tooltip with both stations’ id, name, district, station type,
+                and daily passengers. If a route exists, it also shows
+                direction, route type, and travel time; if not, it states that
+                there is no direct route.
+            </p>
+        </section>
+
+        <section class="analysis-section">
+            <h3>6. Network Questions and Findings</h3>
+
+            <h4>1. Which stations appear central in the network?</h4>
+            <p>
+                <strong>How well:</strong> well, mainly from the node-link view.<br>
+                <strong>View:</strong> node-link; matrix as a check.<br>
+                <strong>Encoding / interaction:</strong> hover highlighting shows
+                how many neighbors a station has; in the matrix, a station with
+                more filled cells in its row/column has more direct routes.
+            </p>
+            <p>
+                The network is mostly a long chain, so few stations look like
+                global hubs. The stations that appear most central are the ones
+                with three connections—two neighbors on the chain plus an extra
+                hop—such as Stations 4, 7, 10, 13, 16, 18, 21, 23, 25, 29, 31,
+                33, 34, and 38. Hovering them lights up more links than hovering
+                a typical Local stop on the chain. A few high-id stations sit
+                almost alone in their district region; they are leaves, not
+                centers.
+            </p>
+
+            <h4>2. Which districts are strongly connected to one another?</h4>
+            <p>
+                <strong>How well:</strong> partially.<br>
+                <strong>View:</strong> node-link is more useful; the matrix only
+                partially, because I ordered by station type rather than district.<br>
+                <strong>Encoding / interaction:</strong> district regions
+                (the X and the Central square) and the links that cross them;
+                hover to see which extra hops leave a district. Matrix label
+                color shows membership but not a district-block pattern.
+            </p>
+            <p>
+                Adjacent districts on the cycle Central → North → South → East
+                → West → Central are the most strongly tied, because the main
+                chain steps through that order. Extra hops also stitch
+                non-adjacent pairs (for example North–Central on Station 7 to
+                Station 31, or East–West on Station 29 to Station 50). Central
+                is the only district with visible within-district routes in the
+                extra links (Stations 1–16 and 21–41). The matrix does not make
+                this district pairing obvious.
+            </p>
+
+            <h4>3. Where are transfer or terminal stations located in the topology?</h4>
+            <p>
+                <strong>How well:</strong> well.<br>
+                <strong>View:</strong> both.<br>
+                <strong>Encoding / interaction:</strong> node-link uses shape
+                (square = Transfer, triangle = Terminal); the matrix puts each
+                type in its own block, separated by the thick lines.
+            </p>
+            <p>
+                Transfer and Terminal stations are spread along the chain, not
+                clustered at one geographic end. Terminals are not only “ends of
+                the line”: Station 1 (Central, triangle) starts the chain, but
+                many other triangles sit in the middle of the path. In the
+                matrix, most filled cells sit off the type blocks, which matches
+                a chain that mixes Local, Transfer, and Terminal rather than
+                connecting only like with like.
+            </p>
+
+            <h4>4. Which stations have high passenger volume?</h4>
+            <p>
+                <strong>How well:</strong> well in the node-link view; not easily
+                as a pattern in the matrix.<br>
+                <strong>View:</strong> node-link.<br>
+                <strong>Encoding / interaction:</strong> sequential color
+                (blue → yellow → red) and the passenger legend; tooltips give
+                the count. The matrix does not encode passengers except in the
+                tooltip.
+            </p>
+            <p>
+                The reddest nodes are the busiest. Stations 46–50 are among the
+                highest-volume stations (Station 50 is the most red). Several of
+                those high-volume stations are not the most connected ones: they
+                sit toward the edge of the West, East, or North regions with few
+                neighbors. Busyness and topological centrality therefore do not
+                line up in this network.
+            </p>
+
+            <h4>5. Where are the longest direct travel-time connections?</h4>
+            <p>
+                <strong>How well:</strong> well in the node-link view, though
+                width is weaker than position would have been; only by tooltip
+                in the matrix.<br>
+                <strong>View:</strong> node-link; matrix as a check.<br>
+                <strong>Encoding / interaction:</strong> link width and route
+                tooltips. Hovering a thick line confirms the minutes. Matrix
+                cells do not encode time except in the tooltip.
+            </p>
+            <p>
+                The thickest links are the longest hops. They are Express
+                routes: Station 7 → Station 31 (16 min), Station 18 →
+                Station 34 (15 min), and Station 29 → Station 50 (14 min).
+                These extra hops stand out against the thinner chain steps.
+            </p>
+
+            <h4>6. Are particular route types concentrated in particular parts of the network?</h4>
+            <p>
+                <strong>How well:</strong> well.<br>
+                <strong>View:</strong> both.<br>
+                <strong>Encoding / interaction:</strong> link/cell color, the
+                route-type filter in the node-link view, and scanning color
+                inside the matrix blocks.
+            </p>
+            <p>
+                Route types are mixed, not confined to one district or one
+                station type. Filtering to Metro, Express, or Shuttle still
+                lights links in several district regions, and the matrix shows
+                all three colors both inside and across the Local / Transfer /
+                Terminal blocks. Express does stand out among the longest
+                extra hops (the 14–16 minute links above), but as a class it
+                is not limited to one region of the map.
+            </p>
+        </section>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab5.js" defer></script>
+
+</body>
+
+</html>
