@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Lab 6</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab6.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+    </nav>
+    <main>
+        <h2>Lab 6: Hierarchical GDP Treemaps</h2>
+
+        <section class="dataset-section">
+            <h3>1. Dataset Description</h3>
+            <p>
+                This assignment visualizes a synthetic world GDP hierarchy:
+                continent, then area (subregion), then country. Each country
+                has a GDP in billions of U.S. dollars and a status of
+                Increase, Unchanged, or Decrease. The same nested JSON is
+                drawn twice, with two D3 tiling algorithms, so area still
+                encodes GDP and color still encodes status.
+            </p>
+        </section>
+
+        <section class="chart-section">
+            <h3>2. Squarify treemap</h3>
+            <p class="chart-note">
+                <code>d3.treemapSquarify</code> keeps rectangles closer to
+                squares. Click a country to zoom one level at a time
+                (continent, then area, then country). Click the path above
+                the chart, or the dark padding around the current view, to
+                zoom back out.
+            </p>
+            <div id="treemap-squarify" class="treemap"></div>
+            <div id="legend" class="legend"></div>
+        </section>
+
+        <section class="chart-section">
+            <h3>3. SliceDice treemap</h3>
+            <p class="chart-note">
+                <code>d3.treemapSliceDice</code> alternates horizontal and
+                vertical splits by depth. Continents form large strips, then
+                areas cut those strips, then countries fill the remaining
+                space. Zoom works the same way as in the squarify view.
+            </p>
+            <div id="treemap-slicedice" class="treemap"></div>
+            <div id="legend-slicedice" class="legend"></div>
+        </section>
+
+        <section class="analysis-section">
+            <h3>4. Design Description</h3>
+            <p>
+                Rectangle area encodes GDP because treemaps are built for
+                part-to-whole comparison: the United States and China occupy
+                large cells, while Kenya is a thin remainder. GDP status is
+                categorical with three ordered classes, so I mapped it to a
+                small diverging palette—teal for Increase, muted gray-blue
+                for Unchanged, and coral for Decrease. Color is independent
+                of size, so a small growing economy stays visible without
+                competing with GDP magnitude. Continent, area, and country
+                are shown by nested padding, parent labels, and leaf labels
+                rather than a third color, which would collide with status.
+                Tooltips repeat the full path and both attributes when a
+                cell is too small to label.
+            </p>
+            <p>
+                Squarify makes GDP comparisons easier because similar values
+                look like similar squares, but sibling areas can sit in
+                irregular clusters, so continent–area nesting is harder to
+                scan. SliceDice is weaker for comparing similar GDPs because
+                many cells become long bars, but the hierarchy is easier to
+                read: each depth uses a consistent cut direction, so
+                continents read as slabs and areas as bands inside them.
+            </p>
+        </section>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab6.js" defer></script>
+
+</body>
+
+</html>
