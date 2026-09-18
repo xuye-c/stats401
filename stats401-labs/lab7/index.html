@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Lab 7</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab7.css">
+
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+    </nav>
+    <main>
+        <h2>Lab 7: Animated Temporal Commercial Network</h2>
+
+        <section class="dataset-section">
+            <h3>1. Dataset Description</h3>
+            <p>
+                This assignment visualizes a synthetic 60-day commercial
+                network among 12 companies. Each node is a company with a
+                sector and a region. Each day’s records are undirected
+                transactions: goods, shipping, components, materials, or
+                services, with a dollar amount and a transaction count.
+                The network is not a real market; it is built so that
+                connectivity, activity, and cross-regional trade can be
+                watched as time moves.
+            </p>
+        </section>
+
+        <section class="chart-section">
+            <h3>2. Temporal node-link visualization</h3>
+            <p class="chart-note">
+                Companies stay in regional columns (Asia, Europe, North
+                America) so positions do not jump when the day’s links
+                change. Play walks through all 60 days. Pause, reset, or
+                drag the slider to inspect one day. Click a bar in the
+                activity strip to jump to that day. New links fade in;
+                inactive links fade out.
+            </p>
+            <div id="network-controls" class="controls">
+                <div class="control-buttons">
+                    <button id="play" type="button">Play</button>
+                    <button id="pause" type="button">Pause</button>
+                    <button id="reset" type="button">Reset</button>
+                </div>
+                <label class="control-field slider-field" for="time-slider">
+                    <span>Day</span>
+                    <input
+                        id="time-slider"
+                        type="range"
+                        min="1"
+                        max="60"
+                        value="1"
+                        step="1">
+                </label>
+            </div>
+            <div id="status" class="status-bar"></div>
+            <div id="chart"></div>
+            <div id="legend" class="legend"></div>
+        </section>
+
+        <section class="analysis-section">
+            <h3>3. Encodings</h3>
+            <ul>
+                <li>Company sector — node color</li>
+                <li>Company region — node shape and column</li>
+                <li>That day’s transaction volume — node size</li>
+                <li>Transaction type — link color</li>
+                <li>Transaction amount — link width</li>
+            </ul>
+            <p>
+                Inactive companies stay on the map at a small size so the
+                mental map is not rebuilt every day. A company that traded
+                today has a brighter outline. Tooltips give the full
+                company or transaction record for the current day.
+            </p>
+        </section>
+
+        <section class="analysis-section">
+            <h3>4. Temporal network questions</h3>
+
+            <h4>1. How does overall network connectivity change across the 60 days?</h4>
+            <p>
+                Connectivity is low and bursty at first, then denser in
+                the last third of the window. A typical day has about six
+                links and nine active companies. The quietest days
+                (1, 7, 11, 13, 17, 19) have only three links and six
+                companies, with totals near $40k–$49k. From about day 41
+                onward the graph thickens: several days reach 9–10 links
+                and all 12 companies, and day 51 is the peak at about
+                $203k. The activity strip under the network follows that
+                rise. Adjacent days almost never share the same pairs, so
+                the change is a daily swap of relationships rather than a
+                slow thickening of a fixed edge set.
+            </p>
+
+            <h4>2. Which companies become more central or commercially active over time?</h4>
+            <p>
+                Fusion Electronics (Technology, Asia) is the most
+                persistent hub: it appears on 53 days and has the highest
+                total volume. Early on, BlueRiver Logistics and Harbor
+                Shipping are also busy. The late window is different.
+                Ion Systems (Technology, North America) is modest through
+                day 40, then its volume jumps in days 41–60 as it ties to
+                Delta Components, Juniper Stores, Apex Textiles, and
+                Fusion. Cedar Retail grows with it, adding late goods and
+                materials links to Granite Wholesale and Keystone
+                Materials. Evergreen Foods stays the smallest node: it
+                only trades goods with Cedar Retail, then also with Lumen
+                Distribution after day 42.
+            </p>
+
+            <h4>3. Are there periods when the network consists of relatively separate clusters?</h4>
+            <p>
+                Yes, especially early odd-numbered days. Days 1, 7, 13,
+                and 19 are three disjoint pairs sitting inside regions:
+                Cedar–Evergreen in North America, Granite–Harbor in
+                Europe, and Ion–Lumen in North America. Mid-window days
+                often split into a larger component of four to six
+                companies plus one or two isolated pairs, with several
+                firms idle. Peak late days (45, 51, 57, 60) still are
+                not a single blob: they usually show one large component
+                and one or two leftover pairs, but every company is
+                active. The regional columns make those separate clusters
+                easy to see without the layout reshuffling.
+            </p>
+
+            <h4>4. Which commercial relationships appear, disappear, or become stronger over time?</h4>
+            <p>
+                Ten pairs repeat on 20 days and act like a backbone, even
+                though they do not fire on consecutive days: Cedar–Evergreen
+                goods, Ion–Lumen services, BlueRiver–Cedar shipping,
+                Apex–Fusion components, Juniper–Lumen goods, and so on.
+                Some mid-window services appear only in days 21–40
+                (Fusion with Harbor, Lumen, and Juniper). After day 41
+                new cross-regional ties show up and stay in the late
+                rhythm: Cedar–Granite goods, Cedar–Keystone materials,
+                Delta–Ion services, Apex–Ion, Fusion–Ion, and
+                BlueRiver–Harbor shipping. Early pairs such as
+                BlueRiver–Delta components and Cedar–Fusion services
+                stop after day 20. Link width on a given day is that
+                day’s amount, so a repeating pair can look stronger on
+                some frames than others.
+            </p>
+
+            <h4>5. Does the network become more or less cross-regional over time?</h4>
+            <p>
+                More cross-regional. In the first 10 days about 54% of
+                links already leave their region column, but several
+                quiet days are entirely within-region (days 1, 7, 13, 19).
+                The last 20 days average about 71–73% cross-regional
+                links, and the new late pairs are mostly Asia–Europe,
+                Asia–North America, or Europe–North America. Because
+                companies are held in regional columns, a late frame
+                shows more lines crossing the gaps than an early frame.
+                Same-region trade does not disappear; it is just a
+                smaller share of a busier graph.
+            </p>
+        </section>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab7.js" defer></script>
+
+</body>
+
+</html>
