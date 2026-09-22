@@ -1,0 +1,39 @@
+chapter,cluster_name,count,chapter_total,proportion
+Part 10: Majors and Courses,"Chinese Language, Culture, and Campus Life",32,232,0.1379
+Part 10: Majors and Courses,Curriculum and Language Requirements,40,232,0.1724
+Part 10: Majors and Courses,"Dual Degrees, Transfer, and Graduation Credit",1,232,0.0043
+Part 10: Majors and Courses,Major Electives,17,232,0.0733
+Part 10: Majors and Courses,"Mission, Community, and Campus Life",3,232,0.0129
+Part 10: Majors and Courses,STEM Majors and Quantitative Courses,69,232,0.2974
+Part 10: Majors and Courses,Social Science and Global Majors,70,232,0.3017
+Part 12: Useful Contacts,"Mission, Community, and Campus Life",1,1,1.0
+Part 1: General Information,"Mission, Community, and Campus Life",9,9,1.0
+Part 2: Liberal Arts Education,"Dual Degrees, Transfer, and Graduation Credit",1,5,0.2
+Part 2: Liberal Arts Education,"Mission, Community, and Campus Life",3,5,0.6
+Part 2: Liberal Arts Education,Social Science and Global Majors,1,5,0.2
+Part 3: The Curriculum,"Admissions, Tuition, and Costs",1,25,0.04
+Part 3: The Curriculum,Curriculum and Language Requirements,13,25,0.52
+Part 3: The Curriculum,"Dual Degrees, Transfer, and Graduation Credit",9,25,0.36
+Part 3: The Curriculum,"Mission, Community, and Campus Life",2,25,0.08
+Part 4: Admission and Financial Aid,"Admissions, Tuition, and Costs",6,11,0.5455
+Part 4: Admission and Financial Aid,Curriculum and Language Requirements,1,11,0.0909
+Part 4: Admission and Financial Aid,"Dual Degrees, Transfer, and Graduation Credit",3,11,0.2727
+Part 4: Admission and Financial Aid,"Mission, Community, and Campus Life",1,11,0.0909
+Part 5: Financial Information,"Admissions, Tuition, and Costs",17,21,0.8095
+Part 5: Financial Information,"Chinese Language, Culture, and Campus Life",3,21,0.1429
+Part 5: Financial Information,"Dual Degrees, Transfer, and Graduation Credit",1,21,0.0476
+Part 6: Academic Procedures,"Admissions, Tuition, and Costs",30,104,0.2885
+Part 6: Academic Procedures,"Chinese Language, Culture, and Campus Life",1,104,0.0096
+Part 6: Academic Procedures,Course Load and Academic Standing,28,104,0.2692
+Part 6: Academic Procedures,Curriculum and Language Requirements,6,104,0.0577
+Part 6: Academic Procedures,"Dual Degrees, Transfer, and Graduation Credit",33,104,0.3173
+Part 6: Academic Procedures,"Mission, Community, and Campus Life",5,104,0.0481
+Part 6: Academic Procedures,STEM Majors and Quantitative Courses,1,104,0.0096
+Part 7: Academic Advising and Support,Curriculum and Language Requirements,6,7,0.8571
+Part 7: Academic Advising and Support,"Mission, Community, and Campus Life",1,7,0.1429
+"Part 8: Career, Study Away, Research","Admissions, Tuition, and Costs",5,16,0.3125
+"Part 8: Career, Study Away, Research","Chinese Language, Culture, and Campus Life",1,16,0.0625
+"Part 8: Career, Study Away, Research","Dual Degrees, Transfer, and Graduation Credit",7,16,0.4375
+"Part 8: Career, Study Away, Research","Mission, Community, and Campus Life",3,16,0.1875
+Part 9: Student Affairs and Campus Life,"Admissions, Tuition, and Costs",4,22,0.1818
+Part 9: Student Affairs and Campus Life,"Mission, Community, and Campus Life",18,22,0.8182

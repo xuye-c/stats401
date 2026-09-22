@@ -1,0 +1,228 @@
+{
+  "title": "Bulletin of Duke Kunshan University Undergraduate Instruction, 2021\u20132022",
+  "year": "2021-2022",
+  "accessed": "2026-09-23",
+  "source": "https://dku-web-admissions.s3.cn-north-1.amazonaws.com.cn/dkumain/files/V2021-22_DKU_UG_Bulletin.pdf",
+  "n_raw": 628,
+  "n_clean": 453,
+  "n_chapters": 11,
+  "n_sections": 142,
+  "mean_words": 200.26048565121414,
+  "median_words": 153.0,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "umap": {
+    "n_neighbors": 15,
+    "min_dist": 0.15,
+    "metric": "cosine",
+    "random_state": 401
+  },
+  "clustering": {
+    "method": "KMeans",
+    "k": 9,
+    "random_state": 401
+  },
+  "cluster_names": {
+    "0": "Social Science and Global Majors",
+    "1": "Course Load and Academic Standing",
+    "2": "Admissions, Tuition, and Costs",
+    "3": "Curriculum and Language Requirements",
+    "4": "Major Electives",
+    "5": "STEM Majors and Quantitative Courses",
+    "6": "Mission, Community, and Campus Life",
+    "7": "Chinese Language, Culture, and Campus Life",
+    "8": "Dual Degrees, Transfer, and Graduation Credit"
+  },
+  "chapter_counts": {
+    "Part 10: Majors and Courses": 232,
+    "Part 6: Academic Procedures": 104,
+    "Part 3: The Curriculum": 25,
+    "Part 9: Student Affairs and Campus Life": 22,
+    "Part 5: Financial Information": 21,
+    "Part 8: Career, Study Away, Research": 16,
+    "Part 4: Admission and Financial Aid": 11,
+    "Part 1: General Information": 9,
+    "Part 7: Academic Advising and Support": 7,
+    "Part 2: Liberal Arts Education": 5,
+    "Part 12: Useful Contacts": 1
+  },
+  "section_counts": {
+    "Course Descriptions": 175,
+    "Majors": 57,
+    "Quantitative Reasoning Course Requirement (1 course, 4 credits)": 7,
+    "Undergraduate Studies:": 6,
+    "Satisfactory Performance Each Term (Term Credit Requirements)": 5,
+    "Student Bills": 4,
+    "Restriction on Past Due Accounts": 4,
+    "Academic Recognition and Honors": 4,
+    "Underload": 4,
+    "Core Components": 4,
+    "Enrollment Deposit": 3,
+    "Registration": 3,
+    "Work Taken After Matriculation at Duke Kunshan University": 3,
+    "Application Requirements": 3,
+    "Grade Point Average": 3,
+    "Prematriculation Credit": 3,
+    "Entrance Credit and Placement": 3,
+    "Credit (CR/NC) Grading System.)": 3,
+    "Academic Integrity": 3,
+    "Transfer of Work Taken Elsewhere": 2
+  },
+  "topic_counts": {
+    "Social Science and Global Majors": 71,
+    "STEM Majors and Quantitative Courses": 70,
+    "Curriculum and Language Requirements": 66,
+    "Admissions, Tuition, and Costs": 63,
+    "Dual Degrees, Transfer, and Graduation Credit": 55,
+    "Mission, Community, and Campus Life": 46,
+    "Chinese Language, Culture, and Campus Life": 37,
+    "Course Load and Academic Standing": 28,
+    "Major Electives": 17
+  },
+  "mean_words_by_chapter": {
+    "Part 10: Majors and Courses": 272.4,
+    "Part 12: Useful Contacts": 122.0,
+    "Part 1: General Information": 128.9,
+    "Part 2: Liberal Arts Education": 122.2,
+    "Part 3: The Curriculum": 133.0,
+    "Part 4: Admission and Financial Aid": 73.9,
+    "Part 5: Financial Information": 65.8,
+    "Part 6: Academic Procedures": 138.9,
+    "Part 7: Academic Advising and Support": 141.7,
+    "Part 8: Career, Study Away, Research": 137.5,
+    "Part 9: Student Affairs and Campus Life": 112.4
+  },
+  "top_terms": [
+    "academic",
+    "china",
+    "chinese",
+    "course",
+    "courses",
+    "credit",
+    "credits",
+    "credits course",
+    "duke",
+    "duke kunshan",
+    "global",
+    "health",
+    "history",
+    "include",
+    "including",
+    "kunshan",
+    "major",
+    "political",
+    "prerequisite",
+    "research",
+    "science",
+    "social",
+    "student",
+    "students",
+    "study",
+    "term",
+    "topics",
+    "university",
+    "work",
+    "world"
+  ],
+  "top_tfidf_terms": [
+    {
+      "term": "course",
+      "score": 25.26
+    },
+    {
+      "term": "students",
+      "score": 23.55
+    },
+    {
+      "term": "credits",
+      "score": 18.89
+    },
+    {
+      "term": "courses",
+      "score": 14.6
+    },
+    {
+      "term": "student",
+      "score": 14.5
+    },
+    {
+      "term": "university",
+      "score": 14.22
+    },
+    {
+      "term": "duke",
+      "score": 13.92
+    },
+    {
+      "term": "academic",
+      "score": 12.68
+    },
+    {
+      "term": "chinese",
+      "score": 12.16
+    },
+    {
+      "term": "credit",
+      "score": 11.79
+    },
+    {
+      "term": "term",
+      "score": 11.29
+    },
+    {
+      "term": "kunshan",
+      "score": 10.31
+    },
+    {
+      "term": "duke kunshan",
+      "score": 9.55
+    },
+    {
+      "term": "kunshan university",
+      "score": 8.73
+    },
+    {
+      "term": "global",
+      "score": 8.43
+    },
+    {
+      "term": "social",
+      "score": 8.1
+    },
+    {
+      "term": "prerequisite",
+      "score": 7.97
+    },
+    {
+      "term": "political",
+      "score": 7.62
+    },
+    {
+      "term": "major",
+      "score": 7.58
+    },
+    {
+      "term": "world",
+      "score": 7.47
+    },
+    {
+      "term": "study",
+      "score": 7.28
+    },
+    {
+      "term": "work",
+      "score": 7.22
+    },
+    {
+      "term": "china",
+      "score": 7.12
+    },
+    {
+      "term": "grade",
+      "score": 6.95
+    },
+    {
+      "term": "health",
+      "score": 6.9
+    }
+  ]
+}

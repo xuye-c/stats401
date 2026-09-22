@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 8</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab8.css">
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+    </nav>
+    <main>
+        <h2>Lab 8: Exploring the DKU Undergraduate Bulletin</h2>
+
+        <section class="dataset-section">
+            <h3>1. Bulletin / Corpus Description</h3>
+            <p>
+                Source: <em>Bulletin of Duke Kunshan University Undergraduate
+                Instruction, 2021–2022</em> (July 2021). Official PDF:
+                <a href="https://dku-web-admissions.s3.cn-north-1.amazonaws.com.cn/dkumain/files/V2021-22_DKU_UG_Bulletin.pdf">
+                V2021-22_DKU_UG_Bulletin.pdf</a>.
+                Accessed 23 September 2026.
+            </p>
+            <p>
+                Each point is one paragraph or short policy block, with
+                chapter, section, subsection, and page kept from the
+                bulletin’s formal outline. Repeated headers, page numbers,
+                table-of-contents lines, and markdown tables were dropped.
+                Duplicate text was removed. Stop words were not stripped
+                before embedding.
+            </p>
+            <ul class="stat-list" id="corpus-stats"></ul>
+        </section>
+
+        <section class="chart-section">
+            <h3>2. Corpus Overview</h3>
+            <div class="overview-grid">
+                <div>
+                    <h4>Passages by chapter</h4>
+                    <div id="chapter-bars"></div>
+                </div>
+                <div>
+                    <h4>Highest TF-IDF terms</h4>
+                    <div id="tfidf-bars"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <h3>3. Semantic Embedding Map</h3>
+            <p class="chart-note">
+                Position is a UMAP view of MiniLM embeddings: nearby points
+                tend to mean similar things. Color is the K-means topic.
+                Size is passage length. Search, chapter, and topic filters
+                dim non-matching points. Click a point for the full passage
+                and its five nearest neighbors. Scroll to zoom; drag to pan.
+                Click a matrix cell below to highlight that chapter × topic
+                in the map.
+            </p>
+            <div class="controls">
+                <label class="control-field" for="search">
+                    <span>Search</span>
+                    <input id="search" type="search" placeholder="credit, graduation, registration…">
+                </label>
+                <label class="control-field" for="chapter-filter">
+                    <span>Chapter</span>
+                    <select id="chapter-filter">
+                        <option value="all">All chapters</option>
+                    </select>
+                </label>
+                <label class="control-field" for="topic-filter">
+                    <span>Topic</span>
+                    <select id="topic-filter">
+                        <option value="all">All topics</option>
+                    </select>
+                </label>
+                <button id="clear-selection" type="button">Clear selection</button>
+            </div>
+            <div class="map-layout">
+                <div id="map"></div>
+                <aside id="detail-panel" class="detail-panel">
+                    <p class="detail-placeholder">
+                        Click a passage in the map to read it and see
+                        semantically similar passages from other sections.
+                    </p>
+                </aside>
+            </div>
+            <div id="map-legend" class="legend"></div>
+        </section>
+
+        <section class="chart-section">
+            <h3>4. Topic × Bulletin Chapter Matrix</h3>
+            <p class="chart-note">
+                Rows are formal bulletin parts. Columns are semantic topics.
+                Cell darkness is the count of passages. Click a cell to
+                highlight those passages on the map; selecting a map point
+                outlines its cell.
+            </p>
+            <div id="matrix"></div>
+        </section>
+
+        <section class="analysis-section">
+            <h3>5. Semantic Findings</h3>
+
+            <h4>1. What are the major semantic topics?</h4>
+            <p>
+                Nine K-means topics on the MiniLM vectors separate the
+                bulletin into policy language versus curricular language.
+                The largest groups are Social Science and Global Majors
+                (71) and STEM Majors and Quantitative Courses (70), which
+                sit in Part 10. Curriculum and Language Requirements (66)
+                mixes general-education rules with EAP and writing.
+                Admissions, Tuition, and Costs (63) and Dual Degrees,
+                Transfer, and Graduation Credit (55) hold most of Parts 4–6.
+                Mission, Community, and Campus Life (46) covers Part 1 and
+                student affairs. Smaller topics are Chinese Language,
+                Culture, and Campus Life (37), Course Load and Academic
+                Standing (28), and a tight Major Electives cluster (17)
+                of repeated “list will be updated periodically” blocks.
+            </p>
+
+            <h4>2. Which topics appear across multiple formal sections?</h4>
+            <p>
+                Dual Degrees, Transfer, and Graduation Credit cuts across
+                Academic Procedures, the Curriculum, and Career / Study
+                Away. Admissions, Tuition, and Costs appears in Parts 4, 5,
+                and 6. Curriculum and Language Requirements shows up in
+                both Part 3 and major descriptions in Part 10. The matrix
+                makes those shared columns dark in several rows, while
+                Major Electives is almost only Part 10.
+            </p>
+
+            <h4>3. Which formal sections contain the most semantically diverse content?</h4>
+            <p>
+                Part 10 (Majors and Courses) and Part 6 (Academic
+                Procedures) each occupy seven of the nine topics. Part 10
+                is diverse because STEM majors, social-science majors,
+                language tracks, and elective boilerplate are semantically
+                different even though they share one chapter. Part 6 is
+                diverse because it mixes load/probation, transfer credit,
+                withdrawal, and integrity-adjacent process language.
+                Part 1 is the least diverse: all nine of its passages fall
+                in Mission, Community, and Campus Life.
+            </p>
+
+            <h4>4. Which passages from different sections are semantically similar?</h4>
+            <p>
+                Clicking a transfer-credit paragraph in Part 6 highlights
+                neighbors in Part 8 (Course Approval and Credit Transfer)
+                at cosine similarity about 0.89–0.94: both cap outside
+                credit at 40 hours and discuss Duke S/U grades. Course-credit
+                definitions in Part 3 also neighbor term-credit rules in
+                Part 6 (about 0.92). The neighbor list under the map is
+                the way to walk these pairs; many of the strongest matches
+                are the same policy restated under a study-away heading.
+            </p>
+
+            <h4>5. Which passages appear unusual relative to their formal section?</h4>
+            <p>
+                In Part 10, three passages land in Mission, Community, and
+                Campus Life instead of a major/STEM topic—for example the
+                Media and Arts major’s opening on communication and
+                creative expression, which reads more like institutional
+                mission language than a course table. In Part 6, one STEM
+                cluster point is a grading scale table remnant sitting
+                among load and probation rules. Those outliers are easier
+                to see when a matrix row is selected and a few map points
+                sit far from that chapter’s main cloud.
+            </p>
+
+            <h4>6. Does “credit” occur in one semantic region or across several topics?</h4>
+            <p>
+                Searching <code>credit</code> lights up 275 passages across
+                almost every topic, especially the two major clouds and
+                Curriculum / Dual-degree columns. The word is not a single
+                neighborhood: it means AP/IPC placement, 136 degree credits,
+                CR/NC grading, transfer limits, and “4 credits” on a course
+                line. <code>graduation</code> is narrower (29 passages),
+                mostly Dual Degrees / Transfer and Course Load.
+                <code>registration</code> is small and sits with admissions
+                and costs. <code>academic integrity</code> is rare in this
+                cleaned paragraph set and lands near mission/community and
+                administrative process language rather than in a dedicated
+                integrity cluster.
+            </p>
+        </section>
+
+        <section class="analysis-section">
+            <h3>6. Design Description and Findings</h3>
+            <p>
+                Passages were embedded with <code>sentence-transformers/all-MiniLM-L6-v2</code>
+                (mean pooling, L2-normalized 384-d vectors). UMAP
+                (<code>n_neighbors=15</code>, <code>min_dist=0.15</code>,
+                cosine, seed 401) is only a map of neighborhoods, not two
+                interpretable axes. K-means (<code>k=9</code>, seed 401)
+                ran on the original vectors. Cluster names come from
+                TF-IDF terms plus reading representative paragraphs, not
+                from the bulletin’s part titles, so a topic can cut across
+                chapters.
+            </p>
+            <p>
+                Color encodes topic; size encodes word count so long policy
+                blocks are easier to click. Chapter is left to the matrix
+                and the stroke of a selected point, which keeps the scatter
+                from carrying two categorical colors. Search and filters
+                dim rather than remove points so the global shape stays
+                visible. Selecting a point lists five cosine neighbors and
+                outlines the matching matrix cell; selecting a cell does
+                the reverse. That coupling is the main analytic move:
+                formal structure (rows) against semantic structure
+                (columns and UMAP clouds). The map shows that majors split
+                by division while credit policy is a bridge between
+                procedures, curriculum, and study away. The matrix shows
+                the same fact as shared dark cells. Together they support
+                the finding that DKU’s bulletin is two documents in one:
+                a relatively tight administrative handbook and a much
+                larger, internally clustered catalog of majors.
+            </p>
+        </section>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab8.js" defer></script>
+</body>
+
+</html>
