@@ -2,8 +2,7 @@ const DATA_URL = "../data/critique_water.json";
 
 const viewWidth = 960;
 const viewHeight = 440;
-const minSlice = 108;
-const humanSlice = 12;
+const thinSlice = 18;
 const padBelow = 18;
 const dominate = 0.8;
 const keepShare = 0.08;
@@ -102,10 +101,8 @@ function partsOf(node, isRoot) {
     const sorted = kids.slice().sort((a, b) => valueOf(b) - valueOf(a));
     const largestShare = valueOf(sorted[0]) / total;
 
-    if (!isRoot && largestShare >= dominate) {
-        return [asPart(sorted[0]), makeOther(sorted.slice(1))].map(part => (
-            part.other ? part : asPart(part.source || part)
-        ));
+    if (!isRoot && largestShare >= dominate && sorted.length > 2) {
+        return [asPart(sorted[0]), makeOther(sorted.slice(1))];
     }
 
     if (!isRoot) {
@@ -157,28 +154,27 @@ function layoutParts(parts) {
         };
     });
 
-    const floorOf = d => (d.group === "human" ? humanSlice : minSlice);
     const narrow = boxes.filter(d => Math.min(d.x1 - d.x0, d.y1 - d.y0) <= padBelow);
     if (!narrow.length) {
         return boxes;
     }
 
-    const reserved = d3.sum(narrow, floorOf);
-    const wide = boxes.filter(d => Math.min(d.x1 - d.x0, d.y1 - d.y0) >= padBelow);
+    const reserved = narrow.length * thinSlice;
+    const wide = boxes.filter(d => Math.min(d.x1 - d.x0, d.y1 - d.y0) > padBelow);
     const wideWeight = d3.sum(wide, d => d.value) || 1;
     let x = 2;
     const ordered = boxes.slice().sort((a, b) => a.x0 - b.x0);
     ordered.forEach(d => {
-        const floor = floorOf(d);
-        const span = (d.x1 - d.x0) < floor
-            ? floor
-            : Math.max(floor, (viewWidth - 4 - reserved) * (d.value / wideWeight));
+        const narrowSlice = Math.min(d.x1 - d.x0, d.y1 - d.y0) <= padBelow;
+        const span = narrowSlice
+            ? thinSlice
+            : Math.max(thinSlice, (viewWidth - 4 - reserved) * (d.value / wideWeight));
         d.x0 = x;
         d.x1 = x + span;
         d.y0 = 2;
         d.y1 = viewHeight - 2;
         const trueWidth = d.value / d3.sum(parts, p => p.value) * viewWidth;
-        d.padded = span === floor && trueWidth < floor;
+        d.padded = narrowSlice && trueWidth < thinSlice;
         x += span;
     });
     const scale = (viewWidth - 2) / x;
