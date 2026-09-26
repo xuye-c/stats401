@@ -156,7 +156,8 @@ p {
 }
 
 
-.lab-nav a:hover {
+.lab-nav a:hover,
+.lab-nav a[aria-current="page"] {
     color: var(--text);
 
     background:
@@ -166,6 +167,10 @@ p {
         rgba(124, 140, 255, 0.4);
 
     transform: translateY(-2px);
+}
+
+.lab-nav a[aria-current="page"] {
+    transform: none;
 }
 
 

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualization Critique and Redesign</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/critique.css">
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+        <a href="../critique/index.html" aria-current="page">Visualization Critique and Redesign</a>
+    </nav>
+    <main>
+        <h2>Visualization Critique and Redesign</h2>
+        <nav class="part-nav" aria-label="Project parts">
+            <a href="index.html" aria-current="page">Visualization</a>
+            <a href="report.html">Report</a>
+        </nav>
+
+        <section class="chart-section">
+            <h3>Global water</h3>
+            <p class="chart-note">Cubic kilometres.</p>
+            <div id="treemap-global" class="treemap"></div>
+
+            <h3>Biological water</h3>
+            <p class="chart-note">Only organisms listed in the dataset are shown. Bar length is the true volume. Trees lie outside the 1,120 km³ organism total.</p>
+            <div id="treemap-biological" class="treemap"></div>
+
+            <h3>Flows</h3>
+            <p class="chart-note">Cubic kilometres per year. Rainfall (110,000) is not on this axis.</p>
+            <div id="bars-use" class="bar-chart"></div>
+
+            <h3>Water in things</h3>
+            <p class="chart-note">Rows under 0.01 km³ are omitted.</p>
+            <div id="bars-products" class="bar-chart"></div>
+        </section>
+
+        <section class="dataset-section">
+            <h3>Data</h3>
+            <p>
+                <a href="../data/critique_water.json">critique_water.json</a>
+                is built from
+                <a href="../data/critique.csv">critique.csv</a>
+                by
+                <a href="../scripts/build_critique_water.py">build_critique_water.py</a>.
+            </p>
+            <p>
+                <a href="https://informationisbeautiful.net/visualizations/water-world-distribution-of-the-all-the-water-in-all-the-world/">Water World</a>,
+                Information is Beautiful.
+            </p>
+        </section>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/critique.js" defer></script>
+</body>
+
+</html>

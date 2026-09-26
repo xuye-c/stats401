@@ -1,0 +1,173 @@
+{
+  "global": {
+    "name": "Global water",
+    "children": [
+      {
+        "name": "Salt water",
+        "group": "salt",
+        "children": [
+          {
+            "name": "Oceans, seas, and bays",
+            "group": "salt",
+            "km3": 1338000000
+          },
+          {
+            "name": "Groundwater, saline",
+            "group": "salt",
+            "km3": 12870000
+          },
+          {
+            "name": "Lakes, saline",
+            "group": "salt",
+            "km3": 85400
+          }
+        ]
+      },
+      {
+        "name": "Fresh water",
+        "group": "fresh",
+        "children": [
+          {
+            "name": "Ice caps, glaciers, and permanent snow",
+            "group": "fresh",
+            "km3": 24064000
+          },
+          {
+            "name": "Groundwater, fresh",
+            "group": "fresh",
+            "km3": 10530000
+          },
+          {
+            "name": "Ground ice and permafrost",
+            "group": "fresh",
+            "km3": 300000
+          },
+          {
+            "name": "Lakes, fresh",
+            "group": "fresh",
+            "km3": 91000
+          },
+          {
+            "name": "Soil moisture",
+            "group": "fresh",
+            "km3": 16500
+          },
+          {
+            "name": "Atmosphere",
+            "group": "fresh",
+            "km3": 12900
+          },
+          {
+            "name": "Swamps",
+            "group": "fresh",
+            "km3": 11470
+          },
+          {
+            "name": "Rivers",
+            "group": "fresh",
+            "km3": 2120
+          }
+        ]
+      }
+    ]
+  },
+  "biological": {
+    "name": "Biological water",
+    "children": [
+      {
+        "name": "Trees",
+        "group": "tree",
+        "km3": 586604
+      },
+      {
+        "name": "Insects",
+        "group": "insect",
+        "km3": 12
+      },
+      {
+        "name": "Other",
+        "group": "other",
+        "other": true,
+        "children": [
+          {
+            "name": "Humans",
+            "group": "human",
+            "children": [
+              {
+                "name": "Male bodies",
+                "group": "human",
+                "km3": 0.12
+              },
+              {
+                "name": "Female bodies",
+                "group": "human",
+                "km3": 0.09
+              }
+            ]
+          },
+          {
+            "name": "Pigs",
+            "group": "animal",
+            "km3": 0.05
+          },
+          {
+            "name": "Horses",
+            "group": "animal",
+            "km3": 0.02
+          },
+          {
+            "name": "Blue whales",
+            "group": "animal",
+            "km3": 0.002
+          }
+        ]
+      }
+    ]
+  },
+  "use": [
+    {
+      "name": "Used by humans",
+      "group": "flow",
+      "km3": 9725,
+      "note": "per year"
+    },
+    {
+      "name": "Groundwater extracted",
+      "group": "flow",
+      "km3": 1000,
+      "note": "per year, 2000"
+    }
+  ],
+  "products": [
+    {
+      "name": "Soft drinks",
+      "group": "product",
+      "km3": 0.55
+    },
+    {
+      "name": "Milk",
+      "group": "product",
+      "km3": 0.47
+    },
+    {
+      "name": "Beer",
+      "group": "product",
+      "km3": 0.15
+    },
+    {
+      "name": "Bath tubs",
+      "group": "product",
+      "km3": 0.09
+    },
+    {
+      "name": "Bread",
+      "group": "product",
+      "km3": 0.07
+    },
+    {
+      "name": "Bananas",
+      "group": "product",
+      "km3": 0.07
+    }
+  ]
+}

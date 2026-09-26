@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualization Critique and Redesign Report</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/critique.css">
+</head>
+
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+    <nav class="lab-nav">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+        <a href="index.html" aria-current="page">Visualization Critique and Redesign</a>
+    </nav>
+    <main>
+        <h2>Visualization Critique and Redesign Report</h2>
+        <nav class="part-nav" aria-label="Project parts">
+            <a href="index.html">Visualization</a>
+            <a href="report.html" aria-current="page">Report</a>
+        </nav>
+
+        <section class="report-section">
+            <h3>Original visualization and context</h3>
+            <p>
+                The visualization I selected is
+                <a href="https://informationisbeautiful.net/visualizations/water-world-distribution-of-the-all-the-water-in-all-the-world/">Water World</a>
+                on Information is Beautiful. That page credits David McCandless,
+                with research by Miriam Quick, and links its data sources. It
+                shows how water on Earth is divided among oceans, ice,
+                groundwater, rivers, organisms, and water people use. Volumes
+                here are cubic kilometres from the course table, loaded as JSON.
+            </p>
+            <figure class="report-figure">
+                <img src="images/water-world-full.png" alt="Water World poster by David McCandless, a curved tree of circles sized by water volume.">
+                <figcaption>
+                    Figure 1. Water World, from Information is Beautiful.
+                </figcaption>
+            </figure>
+            <p>
+                The intended message is a hierarchy. Total water breaks into
+                large branches, then into smaller reservoirs, so a reader can
+                see what sits inside what and which stores are large. The
+                audience is a general reader interested in science or the
+                environment. The tasks are to follow that part-to-whole
+                structure, compare amounts, find the largest and smallest
+                freshwater stores, and see how small fresh water is beside
+                the oceans.
+            </p>
+
+            <h3>Critique</h3>
+            <p>
+                Two choices make the poster work. Color and dashed curves
+                separate the levels, and the branches bend into a water-drop
+                outline, so the hierarchy is easy to follow without the empty
+                corners of a standard tree.
+                Circle size, color, and the connecting lines also support one
+                another. A percentage is printed beside many circles, and the
+                picture is memorable, which matters for a public graphic.
+            </p>
+            <p>
+                Circle area is still a weak channel for these magnitudes. The
+                ocean is almost all of the water, so the other circles shrink
+                toward dots. Ice cannot be compared with groundwater, or a
+                river with a lake, by area. The percentages have to carry that
+                comparison, and the smallest labels are the hardest to read.
+                Rectangle area, among peers at one level, would make that
+                comparison possible.
+            </p>
+            <p>
+                The tree also draws every row as a part of its parent, which
+                the table does not always support. Biological water, 1,120 km³,
+                does not add into the fresh-water total, and water in trees,
+                586,604 km³, is far larger than that biological total. Blood
+                and brains sit inside bodies. Rain, human use, and groundwater
+                extraction are yearly flows. On the same branches as stored
+                water, they double-count or mix a stock with a flow. The
+                remedy is to draw only true partitions, and to give flows a
+                chart of their own.
+            </p>
+            <p>
+                One static frame has to hold every level, every label, and
+                every amount. The overview is clear, and the small reservoirs
+                are not. Opening one branch at a time, and folding a dominated
+                tail into one group, keeps the hierarchy and reaches those
+                small stores on a later click.
+            </p>
+
+            <h3>Redesign rationale</h3>
+            <p>
+                The redesign is two treemaps and two bar charts.
+            </p>
+            <p>
+                First, volume is rectangle area, one level at a time. The
+                opening view is salt water beside fresh water. If one child is
+                at least 80 percent of the view, the rest fold into a dashed
+                Other, and a click opens that group under the same rule. Fresh
+                water has no single store that large, so ice and fresh
+                groundwater stay visible, and only the tail under 8 percent
+                becomes Other. A slice too thin to click is drawn wider, and
+                the percentage stays the true share. Peers are compared
+                together, and a click reaches the small stores.
+            </p>
+            <figure class="report-figure">
+                <img src="images/redesign-global.png" alt="Treemap of global water with salt water filling most of the frame and a narrow fresh-water strip, plus a hierarchy of shares.">
+                <figcaption>
+                    Figure 2. Opening view. Salt water and fresh water are the only rectangles. The tree lists each branch’s share of its parent.
+                </figcaption>
+            </figure>
+            <figure class="report-figure">
+                <img src="images/redesign-fresh.png" alt="Fresh water treemap split into ice, fresh groundwater, and a dashed Other tile.">
+                <figcaption>
+                    Figure 3. Fresh water opened. Ice and groundwater stay separate. The smaller stores are folded into Other.
+                </figcaption>
+            </figure>
+            <p>
+                Second, rows that are not one partition are split apart.
+                Global stocks are one treemap. Biological water is bars at the
+                true volume: trees, insects, and other. Humans sit inside
+                Other, with pigs, horses, and blue whales. Only organisms
+                listed in the dataset are drawn. Trees are included, though
+                586,604 km³ lies outside the 1,120 km³ total. Blood and brains
+                stay inside bodies. Yearly flows, and
+                water reported inside products, are horizontal bars, so length
+                can be compared. Rainfall, 110,000 km³ a year, is stated in
+                text on the visualization page, because on that axis it would
+                flatten the extraction bar. A flow is no longer drawn as a
+                child of a stock.
+            </p>
+            <figure class="report-figure">
+                <img src="images/redesign-biological.png" alt="Biological water bars for trees, insects, and other, drawn at true volume, with a hierarchy beside them.">
+                <figcaption>
+                    Figure 4. Biological water. Trees use the full scale. Insects and other are compared on an enlarged scale. Other opens onto humans, pigs, horses, and blue whales.
+                </figcaption>
+            </figure>
+            <figure class="report-figure">
+                <img src="images/redesign-flows.png" alt="Horizontal bar chart comparing water used by humans per year with groundwater extracted in 2000.">
+                <figcaption>
+                    Figure 5. Yearly flows, compared by length. They are not branches of the reservoir tree.
+                </figcaption>
+            </figure>
+            <figure class="report-figure">
+                <img src="images/redesign-products.png" alt="Horizontal bar chart of water in soft drinks, milk, beer, bath tubs, bread, and bananas.">
+                <figcaption>
+                    Figure 6. Water reported inside things, on a separate length scale from the stocks.
+                </figcaption>
+            </figure>
+            <p>
+                Third, the hierarchy stays, but it leaves the area encoding.
+                A tree beside each chart lists the real branches, and each
+                label is that branch’s share of its parent. The arrow opens a
+                branch without moving the chart. The name focuses the treemap,
+                and the path on the chart steps back. Seeing what contains
+                what no longer requires another label inside every rectangle.
+            </p>
+
+            <h3>Original versus redesign</h3>
+            <p>
+                Salt against fresh, and ice against groundwater, are easier to
+                compare, because each view uses area among peers. Flows and
+                products stay off the reservoir trees, on a length scale of
+                their own.
+            </p>
+            <p>
+                The trade-off is the poster. The drop shape and the single
+                memorable image are gone, and a reader who never clicks still
+                misses the rivers. A widened slice overstates area, even though
+                the percentage is correct. The biological view is dominated by
+                trees, and species the table does not name are left out. The volumes
+                follow the published table, including its rounding, rather than
+                a new survey.
+            </p>
+
+            <h3>References</h3>
+            <ul class="references">
+                <li>
+                    Information is Beautiful.
+                    <a href="https://informationisbeautiful.net/visualizations/water-world-distribution-of-the-all-the-water-in-all-the-world/">Water World</a>.
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <div class="page-actions">
+        <a href="index.html">Back to the visualization</a>
+    </div>
+</body>
+
+</html>
