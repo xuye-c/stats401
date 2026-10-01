@@ -148,10 +148,29 @@ button:hover {
 }
 
 .country {
-    stroke: #333b50;
+    stroke: #78839a;
     stroke-width: 0.65px;
     transition: opacity 0.15s, stroke-width 0.15s;
     cursor: pointer;
+}
+
+.cartogram-country {
+    cursor: pointer;
+}
+
+.cartogram-land {
+    fill: #202a39;
+    stroke: #080b12;
+    stroke-width: 0.7px;
+    pointer-events: none;
+}
+
+.cartogram-label {
+    fill: #172033;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
 }
 
 .country:hover {
@@ -189,7 +208,7 @@ button:hover {
 .legend-missing span {
     width: 13px;
     height: 13px;
-    background: #555b68;
+    background: #343b48;
     border: 1px solid rgba(255, 255, 255, 0.28);
 }
 

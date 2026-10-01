@@ -48,7 +48,11 @@
                 This visualization uses the provided 2025 nominal GDP dataset,
                 based on the IMF World Economic Outlook, October 2025.
                 GDP is measured in current U.S. dollars and represented in
-                billions of U.S. dollars.
+                billions of U.S. dollars. The CSV is joined to the world
+                GeoJSON by ISO-3; explicit corrections for France and Norway's
+                source placeholders produce 50 matching economies. WEO values
+                may include IMF staff estimates and may be revised; countries
+                outside the top 50 are treated as missing data, not zero GDP.
             </p>
         </section>
 
@@ -57,14 +61,17 @@
         <section class="section">
             <div class="section-heading">
                 <div>
-                    <p class="section-label">PART A</p>
+                    <p class="section-label">PART B</p>
                     <h2>2. 2025 GDP Choropleth</h2>
                 </div>
             </div>
 
             <p class="description">
-                Color intensity represents 2025 nominal GDP. Countries outside
-                the provided top-50 dataset are shown as missing data.
+                Color represents 2025 nominal GDP on a logarithmic scale.
+                GDP is strongly skewed, so the log scale keeps differences
+                among mid-ranked economies visible while preserving their
+                ordering. Countries outside the top 50 use a neutral no-data
+                fill.
             </p>
 
             <div class="map-card">
@@ -91,14 +98,17 @@
         <section class="section">
             <div class="section-heading">
                 <div>
-                    <p class="section-label">PART B</p>
+                    <p class="section-label">PART C</p>
                     <h2>3. 2025 GDP Cartogram</h2>
                 </div>
             </div>
 
             <p class="description">
-                Country area represents 2025 nominal GDP: area is proportional
-                to GDP. Shapes and positions are distorted to reduce overlap.
+                Each circle's area is proportional to 2025 nominal GDP. Circle
+                positions roughly follow geographic locations, with modest
+                displacement to reduce overlap; ISO-3 labels help identify
+                countries whose familiar shapes are no longer shown. Hover or
+                click either map to highlight the same country in both views.
             </p>
 
             <div class="map-card">
@@ -118,7 +128,7 @@
         <!-- Comparison -->
         <section class="section comparison-section">
 
-            <p class="section-label">PART C</p>
+            <p class="section-label">PARTS D–E</p>
             <h2>4. Design and Comparison</h2>
 
             <div class="comparison-text">
@@ -132,18 +142,17 @@
                     cartogram, area is proportional to GDP, so the United
                     States and China dominate much more strongly. Kazakhstan,
                     Finland, and Peru, near the bottom of this top-50 dataset,
-                    shrink to small regions.
+                    appear as small circles.
                 </p>
 
                 <p>
-                    The choropleth preserves each country's geographic location,
-                    boundary, and relative land area, so it supports questions
-                    about regional patterns and where economies are situated.
-                    The cartogram scales projected country area directly by
-                    GDP and moves shapes slightly to reduce overlap. It therefore
-                    distorts boundaries, country size, and some spatial
-                    relationships, but supports comparison of economic
-                    magnitude more directly.
+                    The choropleth preserves each country's geographic location
+                    and boundary, making it useful for regional patterns,
+                    neighboring-country comparisons, and geographic orientation.
+                    The cartogram replaces boundaries with circles whose areas
+                    encode GDP, then nudges them to reduce overlap. This distorts
+                    exact shapes and distances, but supports direct comparisons
+                    of economic magnitude.
                 </p>
 
                 <p>

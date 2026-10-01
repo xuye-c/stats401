@@ -17,6 +17,10 @@ const GEOJSON_FILE =
 
 const width = 1100;
 const height = 620;
+const ISO3_OVERRIDES = {
+    France: "FRA",
+    Norway: "NOR"
+};
 
 
 // ------------------------------------------------------------
@@ -74,18 +78,18 @@ Promise.all([
 
     geoData.features.forEach(feature => {
 
-        const geoISO =
+        const rawGeoISO =
             feature.properties["ISO3166-1-Alpha-3"] ||
             feature.properties.iso_a3 ||
             feature.properties.ISO_A3 ||
             feature.properties.iso3 ||
             feature.properties.ADM0_A3;
 
-        const data =
-            valueByISO.get(geoISO) ||
-            gdpData.find(
-                d => d.country === feature.properties.name
-            );
+        const geoISO = rawGeoISO === "-99"
+            ? ISO3_OVERRIDES[feature.properties.name]
+            : rawGeoISO;
+
+        const data = valueByISO.get(geoISO);
 
         const iso =
             data ? data.iso3 : geoISO;
@@ -110,6 +114,16 @@ Promise.all([
     drawChoropleth();
     drawCartogram();
     drawLegend();
+
+    const matchedCount = geoData.features.filter(
+        feature => feature.properties.gdp != null
+    ).length;
+
+    if (matchedCount !== gdpData.length) {
+        console.warn(
+            `Matched ${matchedCount} of ${gdpData.length} GDP records by ISO-3.`
+        );
+    }
 
 })
 .catch(error => {
@@ -199,7 +213,7 @@ function drawChoropleth() {
 
     const colorScale =
         d3.scaleSequentialLog(
-            d3.interpolateBlues
+            d3.interpolateRgb("#293449", "#aeb8ff")
         )
         .domain([
             d3.min(gdpData, d => d.gdp),
@@ -222,10 +236,8 @@ function drawChoropleth() {
                 "fill",
                 d => {
 
-                    if (
-                        d.properties.gdp == null
-                    ) {
-                        return "#e8e8e8";
+                    if (d.properties.gdp == null) {
+                        return "#343b48";
                     }
 
                     return colorScale(
@@ -298,55 +310,37 @@ function drawChoropleth() {
 
 function drawCartogram() {
 
-    const container =
-        d3.select("#cartogram-container");
+    const container = d3.select("#cartogram-container");
+    const svg = container
+        .append("svg")
+        .attr("class", "map-svg")
+        .attr("viewBox", `0 0 ${width} ${height}`)
+        .attr("preserveAspectRatio", "xMidYMid meet");
 
-    const svg =
-        container
-            .append("svg")
-            .attr("class", "map-svg")
-            .attr("viewBox", `0 0 ${width} ${height}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
+    const projection = d3.geoNaturalEarth1()
+        .fitExtent([[90, 90], [width - 90, height - 80]], geoData);
+    const path = d3.geoPath().projection(projection);
+    const mapGroup = svg.append("g");
 
+    mapGroup
+        .selectAll(".cartogram-land")
+        .data(geoData.features)
+        .join("path")
+        .attr("class", "cartogram-land")
+        .attr("d", path);
 
-    const projection =
-        d3.geoNaturalEarth1()
-            .fitSize(
-                [width, height],
-                geoData
-            );
-
-
-    const path =
-        d3.geoPath()
-            .projection(projection);
-
-
-    const mapGroup =
-        svg.append("g");
-
-
-    const features =
-        geoData.features.filter(
-            d => d.properties.gdp != null
-        );
-
-    const maxGDP =
-        d3.max(gdpData, d => d.gdp);
-
-    const areaPerBillion =
-        width * height * 0.075 / maxGDP;
-
+    const features = geoData.features.filter(
+        feature => feature.properties.gdp != null
+    );
+    const maxGDP = d3.max(gdpData, d => d.gdp);
+    const areaPerBillion = width * height * 0.075 / maxGDP;
     const nodes = features.map(feature => {
         const centroid = path.centroid(feature);
-        const area = path.area(feature);
         const targetArea = feature.properties.gdp * areaPerBillion;
 
         return {
             feature,
             centroid,
-            area,
-            targetArea,
             radius: Math.sqrt(targetArea / Math.PI),
             x: centroid[0],
             y: centroid[1]
@@ -354,52 +348,43 @@ function drawCartogram() {
     });
 
     const simulation = d3.forceSimulation(nodes)
-        .force(
-            "x",
-            d3.forceX(d => d.centroid[0]).strength(0.18)
-        )
-        .force(
-            "y",
-            d3.forceY(d => d.centroid[1]).strength(0.18)
-        )
+        .randomSource(d3.randomLcg(0.42))
+        .force("x", d3.forceX(d => d.centroid[0]).strength(0.2))
+        .force("y", d3.forceY(d => d.centroid[1]).strength(0.2))
         .force(
             "collide",
-            d3.forceCollide(d => d.radius + 3)
-                .strength(0.75)
-                .iterations(3)
+            d3.forceCollide(d => d.radius + 2)
+                .strength(0.9)
+                .iterations(4)
         )
         .stop();
 
-    for (let tick = 0; tick < 300; tick += 1) {
+    for (let tick = 0; tick < 400; tick += 1) {
         simulation.tick();
     }
 
-    cartogramCountries =
-        mapGroup
-            .selectAll(".cartogram-country")
-            .data(nodes)
-            .join("path")
-            .attr("class", "country cartogram-country")
-            .attr(
-                "d",
-                d => path(d.feature)
-            )
-            .attr(
-                "fill",
-                "#7c8cff"
-            )
-            .attr(
-                "transform",
-                d => {
-                    const scale = Math.sqrt(d.targetArea / d.area);
+    cartogramCountries = mapGroup
+        .selectAll(".cartogram-country")
+        .data(nodes)
+        .join("circle")
+        .attr("class", "country cartogram-country")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", d => d.radius)
+        .attr("fill", "#899cff")
+        .attr("stroke", "#c9d1ff")
+        .attr("stroke-width", 1.1)
+        .datum(d => d.feature);
 
-                    return `translate(${d.x},${d.y}) scale(${scale}) translate(${-d.centroid[0]},${-d.centroid[1]})`;
-                }
-            )
-            .each(function(d) {
-                d3.select(this)
-                    .datum(d.feature);
-            });
+    mapGroup
+        .selectAll(".cartogram-label")
+        .data(nodes)
+        .join("text")
+        .attr("class", "cartogram-label")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("font-size", d => Math.min(15, Math.max(8, d.radius * 0.36)))
+        .text(d => d.feature.properties.iso3);
 
     addTooltip(cartogramCountries);
     addHighlight(cartogramCountries);
@@ -559,6 +544,13 @@ function renderHighlight() {
                     : 0.65
             );
     });
+
+    d3.selectAll(".cartogram-label")
+        .attr("opacity", d =>
+            !activeISO || d.feature.properties.iso3 === activeISO
+                ? 1
+                : 0.35
+        );
 }
 
 
@@ -592,7 +584,7 @@ function drawLegend() {
 
     const scale =
         d3.scaleSequentialLog(
-            d3.interpolateBlues
+            d3.interpolateRgb("#293449", "#aeb8ff")
         )
         .domain([
             minGDP,
