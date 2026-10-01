@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lab 9 — Geospatial Visualization</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab9.css">
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html" aria-current="page">Lab 9</a>
+        <a href="../lab10/index.html">Lab 10</a>
+        <a href="../critique/index.html">Critique</a>
+    </nav>
+
+    <main class="page">
+
+        <header class="page-header">
+            <p class="eyebrow">STATS 401 · LAB 9</p>
+            <h1>2025 GDP: Choropleth vs. Cartogram</h1>
+            <p class="subtitle">
+                Comparing geographic and quantitative representations of
+                the world's 50 largest economies by nominal GDP.
+            </p>
+        </header>
+
+
+        <!-- Dataset -->
+        <section class="section">
+            <h2>1. Dataset Description</h2>
+
+            <p>
+                This visualization uses the provided 2025 nominal GDP dataset,
+                based on the IMF World Economic Outlook, October 2025.
+                GDP is measured in current U.S. dollars and represented in
+                billions of U.S. dollars.
+            </p>
+        </section>
+
+
+        <!-- Choropleth -->
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <p class="section-label">PART A</p>
+                    <h2>2. 2025 GDP Choropleth</h2>
+                </div>
+            </div>
+
+            <p class="description">
+                Color intensity represents 2025 nominal GDP. Countries outside
+                the provided top-50 dataset are shown as missing data.
+            </p>
+
+            <div class="map-card">
+
+                <div class="map-toolbar">
+                    <span class="map-hint">
+                        Hover or click a country · Scroll to zoom · Drag to pan
+                    </span>
+
+                    <button id="reset-choropleth">
+                        Reset View
+                    </button>
+                </div>
+
+                <div id="choropleth-container"></div>
+
+                <div id="choropleth-legend"></div>
+
+            </div>
+        </section>
+
+
+        <!-- Cartogram -->
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <p class="section-label">PART B</p>
+                    <h2>3. 2025 GDP Cartogram</h2>
+                </div>
+            </div>
+
+            <p class="description">
+                Country area represents 2025 nominal GDP: area is proportional
+                to GDP. Shapes and positions are distorted to reduce overlap.
+            </p>
+
+            <div class="map-card">
+
+                <div class="map-toolbar">
+                    <span class="map-hint">
+                        Hover or click a country to compare both maps
+                    </span>
+                </div>
+
+                <div id="cartogram-container"></div>
+
+            </div>
+        </section>
+
+
+        <!-- Comparison -->
+        <section class="section comparison-section">
+
+            <p class="section-label">PART C</p>
+            <h2>4. Design and Comparison</h2>
+
+            <div class="comparison-text">
+
+                <p>
+                    The United States and China stand out most in both views;
+                    Germany, Japan, and India also receive strong choropleth
+                    colors. The log color scale makes differences among the
+                    other top economies legible despite the very large gap
+                    between the United States and smaller economies. In the
+                    cartogram, area is proportional to GDP, so the United
+                    States and China dominate much more strongly. Kazakhstan,
+                    Finland, and Peru, near the bottom of this top-50 dataset,
+                    shrink to small regions.
+                </p>
+
+                <p>
+                    The choropleth preserves each country's geographic location,
+                    boundary, and relative land area, so it supports questions
+                    about regional patterns and where economies are situated.
+                    The cartogram scales projected country area directly by
+                    GDP and moves shapes slightly to reduce overlap. It therefore
+                    distorts boundaries, country size, and some spatial
+                    relationships, but supports comparison of economic
+                    magnitude more directly.
+                </p>
+
+                <p>
+                    Changing from color to area makes the GDP hierarchy harder
+                    to ignore: large economies occupy more visual space rather
+                    than simply receiving a darker mark. That makes the
+                    cartogram effective for comparing economic weight, while
+                    the choropleth remains more reliable for geographic
+                    orientation and regional comparison. Neither view answers
+                    every question; the useful choice depends on whether the
+                    task prioritizes economic magnitude or geographic context.
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <script src="../js/lab9.js"></script>
+
+</body>
+</html>

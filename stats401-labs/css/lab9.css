@@ -1,0 +1,275 @@
+:root {
+    --lab9-ink: var(--text, #f3f6ff);
+    --lab9-muted: var(--muted, #9aa4b8);
+    --lab9-panel: var(--panel, rgba(18, 23, 35, 0.82));
+    --lab9-border: var(--panel-border, rgba(255, 255, 255, 0.1));
+    --lab9-accent: var(--accent, #7c8cff);
+    --lab9-grid: rgba(255, 255, 255, 0.07);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--lab9-ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        radial-gradient(ellipse at 8% 0%, rgba(124, 140, 255, 0.12), transparent 34rem),
+        var(--bg, #080b12);
+}
+
+.lab-nav {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 18px 40px 14px;
+}
+
+.lab-nav a {
+    font-size: 0.86rem;
+}
+
+.page {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 48px 40px 88px;
+}
+
+.page-header {
+    margin: 0 0 54px;
+    padding: 34px 0 38px;
+    border-bottom: 1px solid var(--lab9-border);
+}
+
+.eyebrow,
+.section-label {
+    margin: 0 0 10px;
+    color: var(--lab9-accent);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.page-header h1 {
+    max-width: 900px;
+    margin: 0;
+    color: var(--lab9-ink);
+    font-size: 2.6rem;
+    line-height: 1.15;
+    letter-spacing: 0;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+}
+
+.subtitle {
+    max-width: 780px;
+    margin: 16px 0 0;
+    color: var(--lab9-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+}
+
+.section {
+    margin: 0 0 56px;
+}
+
+.section h2 {
+    margin: 0;
+    color: var(--lab9-ink);
+    font-size: 1.35rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.section-heading {
+    margin-bottom: 8px;
+}
+
+.section > p,
+.description {
+    max-width: 900px;
+    color: var(--lab9-muted);
+    font-size: 0.94rem;
+    line-height: 1.7;
+}
+
+.description {
+    margin: 10px 0 0;
+}
+
+.map-card,
+.comparison-text {
+    margin-top: 20px;
+    padding: 16px 18px;
+    background: var(--lab9-panel);
+    border: 1px solid var(--lab9-border);
+    border-radius: 10px;
+}
+
+.map-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.map-hint {
+    color: var(--lab9-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+button {
+    min-height: 36px;
+    padding: 0 12px;
+    color: var(--lab9-ink);
+    font: inherit;
+    font-size: 0.84rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--lab9-border);
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: rgba(124, 140, 255, 0.12);
+    border-color: rgba(124, 140, 255, 0.42);
+}
+
+.map-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.country {
+    stroke: #333b50;
+    stroke-width: 0.65px;
+    transition: opacity 0.15s, stroke-width 0.15s;
+    cursor: pointer;
+}
+
+.country:hover {
+    stroke: #ffffff;
+    stroke-width: 1.8px;
+}
+
+.legend-title {
+    fill: var(--lab9-ink);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#choropleth-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    margin-top: 10px;
+}
+
+#choropleth-legend svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.legend-missing {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--lab9-muted);
+    font-size: 0.78rem;
+}
+
+.legend-missing span {
+    width: 13px;
+    height: 13px;
+    background: #555b68;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.tooltip {
+    position: fixed;
+    z-index: 1000;
+    max-width: min(260px, calc(100vw - 24px));
+    padding: 10px 12px;
+    color: var(--lab9-ink);
+    background: rgba(10, 13, 21, 0.96);
+    border: 1px solid var(--lab9-border);
+    border-radius: 7px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tooltip .country-name {
+    margin-bottom: 3px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.tooltip .gdp {
+    color: #c3cada;
+}
+
+.comparison-section {
+    max-width: 1040px;
+}
+
+.comparison-text {
+    padding: 22px 24px;
+}
+
+.comparison-text p {
+    margin: 0 0 15px;
+    color: #c2c9d8;
+    font-size: 0.94rem;
+    line-height: 1.75;
+}
+
+.comparison-text p:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 800px) {
+    .lab-nav {
+        padding: 14px 18px 12px;
+    }
+
+    .page {
+        padding: 30px 18px 64px;
+    }
+
+    .page-header {
+        margin-bottom: 38px;
+        padding: 24px 0 28px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .section {
+        margin-bottom: 42px;
+    }
+
+    .map-card {
+        padding: 12px;
+    }
+
+    .map-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .comparison-text {
+        padding: 18px;
+    }
+}
