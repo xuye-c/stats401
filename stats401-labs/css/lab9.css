@@ -37,9 +37,15 @@ body {
 }
 
 .page-header {
-    margin: 0 0 54px;
-    padding: 34px 0 38px;
-    border-bottom: 1px solid var(--lab9-border);
+    margin: 0 0 22px;
+    padding: 34px 0 0;
+    border-bottom: 0;
+}
+
+.page > .lab-nav {
+    max-width: none;
+    margin: 0 0 38px;
+    padding: 0 0 15px;
 }
 
 .eyebrow,
@@ -267,8 +273,8 @@ button:hover {
     }
 
     .page-header {
-        margin-bottom: 38px;
-        padding: 24px 0 28px;
+        margin-bottom: 18px;
+        padding: 24px 0 0;
     }
 
     .page-header h1 {
