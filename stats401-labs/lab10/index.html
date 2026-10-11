@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 10 — Novel Interaction</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/lab6.css">
+    <link rel="stylesheet" href="../css/lab10.css">
+</head>
+<body>
+    <header>
+        <h1>STATS 401</h1>
+        <p>Data Acquisition and Visualization</p>
+    </header>
+
+    <nav class="lab-nav" aria-label="Lab navigation">
+        <a href="../lab1/index.html">Lab 1</a>
+        <a href="../lab2/index.html">Lab 2</a>
+        <a href="../lab3/index.html">Lab 3</a>
+        <a href="../lab4/index.html">Lab 4</a>
+        <a href="../lab5/index.html">Lab 5</a>
+        <a href="../lab6/index.html">Lab 6</a>
+        <a href="../lab7/index.html">Lab 7</a>
+        <a href="../lab8/index.html">Lab 8</a>
+        <a href="../lab9/index.html">Lab 9</a>
+        <a href="../lab10/index.html" aria-current="page">Lab 10</a>
+        <a href="../critique/index.html">Visualization Critique and Redesign</a>
+    </nav>
+
+    <main>
+        <h2>Lab 10: Voice Control for the GDP Treemap</h2>
+
+        <section class="dataset-section">
+            <h3>1. Previous visualization</h3>
+            <p>
+                This lab extends the squarify treemap from
+                <a href="../lab6/index.html">Lab 6</a>. The data are the same
+                nested GDP hierarchy: continent, area, then country. Rectangle
+                area still encodes GDP in billions of U.S. dollars, and color
+                still encodes status (Increase, Unchanged, Decrease). Lab 6
+                keeps the slice-and-dice comparison; this page keeps the
+                squarify view and adds voice as another way to drive the same
+                zoom, highlight, and filter actions.
+            </p>
+        </section>
+
+        <section class="chart-section">
+            <h3>2. How to use voice</h3>
+            <p class="chart-note">
+                Click <strong>Start Voice Control</strong> and allow the
+                microphone. It stays on while you talk, and the Heard line
+                updates as words arrive. The command runs after you pause
+                for about two seconds, or when you click
+                <strong>Stop Listening</strong>. Speech recognition needs
+                Chrome or Edge, and a page opened on localhost or HTTPS.
+            </p>
+            <ul class="command-list">
+                <li><code>Show Asia</code> zooms to a continent or area. <code>Show Japan</code> zooms to that country.</li>
+                <li><code>Highlight Japan</code> outlines a country and keeps its neighbors visible.</li>
+                <li><code>Show increase</code>, <code>Show decrease</code>, or <code>Show unchanged</code> dims every other status.</li>
+                <li><code>Zoom out</code> moves up one level. <code>Reset</code> returns to the world and clears the filter.</li>
+            </ul>
+        </section>
+
+        <section class="interaction-layout">
+            <div class="panel">
+                <h3>Voice</h3>
+                <div class="button-row">
+                    <button id="voice-button" type="button">Start Voice Control</button>
+                    <button id="voice-stop" type="button" disabled>Stop Listening</button>
+                </div>
+                <div class="feedback" aria-live="polite">
+                    <p><span>Status</span> <strong id="voice-status">Voice control inactive</strong></p>
+                    <p><span>Heard</span> <strong id="voice-heard">—</strong></p>
+                    <p><span>Action</span> <strong id="voice-action">—</strong></p>
+                </div>
+                <p class="privacy">
+                    Listening starts only after Start Voice Control. It keeps
+                    going through short pauses, then stops after about two
+                    seconds of silence or when you click Stop Listening.
+                    Chrome sends the audio to its speech service, so the clip
+                    may leave this computer. This page does not store it.
+                </p>
+            </div>
+
+            <div class="panel">
+                <h3>Fallback controls</h3>
+                <p class="panel-note">
+                    The chart stays usable if recognition fails or the
+                    microphone is blocked. These controls call the same
+                    functions as the voice commands.
+                </p>
+                <p class="control-label">Zoom to a continent</p>
+                <div id="region-buttons" class="button-row"></div>
+                <p class="control-label">Filter by GDP status</p>
+                <div class="button-row" id="status-buttons">
+                    <button type="button" data-status="all">All</button>
+                    <button type="button" data-status="Increase">Increase</button>
+                    <button type="button" data-status="Unchanged">Unchanged</button>
+                    <button type="button" data-status="Decrease">Decrease</button>
+                </div>
+                <p class="control-label">Navigation</p>
+                <div class="button-row">
+                    <button id="zoom-out" type="button">Zoom out</button>
+                    <button id="reset-view" type="button">Reset</button>
+                </div>
+                <form id="command-form" class="command-form">
+                    <label for="command-input">Type a command</label>
+                    <div class="command-row">
+                        <input
+                            id="command-input"
+                            list="name-list"
+                            autocomplete="off"
+                            placeholder='Highlight Japan'
+                        >
+                        <button type="submit">Run</button>
+                    </div>
+                </form>
+                <datalist id="name-list"></datalist>
+                <p class="control-label">Try the voice phrases</p>
+                <div class="button-row">
+                    <button type="button" class="phrase" data-command="show asia">“Show Asia”</button>
+                    <button type="button" class="phrase" data-command="highlight japan">“Highlight Japan”</button>
+                    <button type="button" class="phrase" data-command="show increase">“Show increase”</button>
+                    <button type="button" class="phrase" data-command="reset">“Reset”</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="chart-section">
+            <h3>3. Squarify treemap</h3>
+            <p class="chart-note">
+                Click a country to zoom one level at a time. Click the path
+                above the chart, or the padding around the current view, to
+                zoom back out. Hover a cell for its continent, area, GDP, and
+                status.
+            </p>
+            <div id="treemap" class="treemap"></div>
+            <p id="filter-note" class="filter-note"></p>
+            <div id="selection-card" class="selection-card">
+                <p id="selection-text">Hover a country, or say “Highlight Japan”.</p>
+            </div>
+            <div id="legend" class="legend"></div>
+        </section>
+
+        <section class="analysis-section">
+            <h3>4. Design reflection</h3>
+            <p>
+                This page extends the squarify treemap from Lab 6. The
+                hierarchy is still continent, area, and country. Rectangle
+                area still encodes GDP in billions of U.S. dollars, and color
+                still encodes Increase, Unchanged, or Decrease. The novel
+                input is voice, through the browser Web Speech API. “Show
+                Asia” zooms to a region, “Highlight Japan” selects a country
+                and opens its details, and “Show increase” filters by status.
+                Reset and zoom out are spoken as well. Voice fits this
+                treemap because many countries are thin slivers that are hard
+                to click, while their names are easy to say, so navigation
+                works more like search. The same functions stay on buttons
+                and a typed command, and the microphone starts only after
+                Start Voice Control. Recognition can confuse “South Africa”
+                with “South America,” and it misses short names in a noisy
+                room. The heard line and the action line make those mistakes
+                visible.
+            </p>
+        </section>
+    </main>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <div class="page-actions">
+        <a href="../index.html">Back to home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" defer></script>
+    <script src="../js/lab10.js" defer></script>
+</body>
+</html>
